@@ -1,3 +1,4 @@
+from block_grid import *
 class Node:
 	def __init__(self,data,level,fval):
 		self.data=data
@@ -74,37 +75,27 @@ class Puzzle:
 	                    temp += 1
 	        return temp
 	def process(self):
-      #  """ Accept Start and Goal Puzzle state"""
-	        print("Enter the start state matrix \n")
+		#print("Enter the start state matrix \n")
 	     #   start = self.accept()
 		start=[['_','5','2'],['1','8','3'],['4','7','6']]
-	        print("Enter the goal state matrix \n")
+		#print("Enter the goal state matrix \n")
 	      #  goal = self.accept()
 		goal=[['1','2','3'],['4','5','6'],['7','8','_']]
 		start = Node(start,0,0)
-	        start.fval = self.f(start,goal)
+	    	start.fval = self.f(start,goal)
        # """ Put the start node in the open list"""
-	        self.open.append(start)
-	        print("\n\n")
-	        while True:
-	            cur = self.open[0]
-	            print("")
-	            print("  | ")
-	            print("  | ")
-	            print(" \\\'/ \n")
-	            for i in cur.data:
-			temp=[]
-			for j in i:
-	                   temp.append(j)
-	                print(temp)
-        #    """ If the difference between current and goal node is 0 we have reached the goal node"""
-	            if(self.h(cur.data,goal) == 0):
-	                break
-	            for i in cur.generate_child():
-	                i.fval = self.f(i,goal)
-	                self.open.append(i)
-	            self.closed.append(cur)
-            	    del self.open[0]#""" sort the opne list based on f value """
-            	    self.open.sort(key = lambda x:x.fval,reverse=False)
+	    	self.open.append(start)
+	    	print("\n\n")
+	    	while True:
+			cur = self.open[0]
+			puzzle_viewer(cur.data)
+	          	if(self.h(cur.data,goal) == 0):
+				break
+	        	for i in cur.generate_child():
+	            		i.fval = self.f(i,goal)
+	            		self.open.append(i)
+	        	self.closed.append(cur)
+        		del self.open[0]#""" sort the opne list based on f value """
+        		self.open.sort(key = lambda x:x.fval,reverse=False)
 puz = Puzzle(3)
 puz.process()
